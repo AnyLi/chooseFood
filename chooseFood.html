@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="icon" type="image/x-icon" href="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596693956210&di=f365739acad0aecbf4c00a5053920701&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F18%2F10%2F24%2F05a24af6f570093abd98fc1ade3ccf6f.jpg%2521%2Ffwfh%2F804x804%2Fquality%2F90%2Funsharp%2Ftrue%2Fcompress%2Ftrue">
+    <title>今天吃什么</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        .wrap {
+            background: url('https://hbimg.huabanimg.com/573cc9443b369257abfd0210122167e4f27ff8db6eb24-WG8SyM_fw658/format/webp') center 0.1%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .main,
+        .typeMain {
+            background: #fff;
+            text-align: center;
+            padding: 5rem 5rem 3rem;
+            border-radius: 1rem;
+            font-size: 1rem;
+            box-shadow: 0.5rem 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .title {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .food {
+            background: url('https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3358224389,1099213413&fm=15&gp=0.jpg');
+            background-size: 100%;
+            color: #fff;
+            width: 10rem;
+            height: 10rem;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 10rem;
+            letter-spacing: 0.2rem;
+        }
+        
+        .resetBtn {
+            background: #7EA883;
+            color: #fff;
+            border-radius: 2rem;
+            padding: 0.1rem 3rem;
+            width: max-content;
+            height: 2rem;
+            line-height: 2rem;
+            margin: 2rem auto 0;
+            cursor: pointer;
+            transition: all .5s;
+        }
+        
+        .setType {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            border: 1px solid #7EA883;
+            color: #7EA883;
+            cursor: pointer;
+            border-radius: 1rem;
+            font-size: 0.7rem;
+            padding: 0.2rem 1rem;
+            transition: all .5s;
+        }
+        
+        .setType:hover,
+        .resetBtn:hover {
+            transform: scale(1.1);
+        }
+        
+        .typeUl {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        
+        .typeUl>li {
+            width: max-content;
+            padding: 0.1rem 1rem;
+            border: 1px solid #333;
+            color: #333;
+            border-radius: 1rem;
+            cursor: pointer;
+            margin-left: 2rem;
+        }
+        
+        .typeUl>li:first-child {
+            margin-left: 0
+        }
+        
+        .typeUl>li.active {
+            background: #7EA883;
+            border-color: #7EA883;
+            color: #fff;
+        }
+        
+        .backBtn {
+            background: #7EA883;
+            color: #fff;
+            width: 10rem;
+            text-align: center;
+            height: 3rem;
+            line-height: 3rem;
+            margin: 0 auto;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all .5s;
+        }
+        
+        .backBtn:hover {
+            transform: scale(1.1);
+        }
+        
+        .hide {
+            display: none;
+        }
+        
+        .show {
+            display: block;
+        }
+        
+        .typeName {
+            color: #7EA883;
+        }
+    </style>
+    <script>
+        $(function() {
+            const typeList = [{
+                name: '早上',
+                foodList: [
+                    '胡辣汤+油条',
+                    '花干夹馍',
+                    '麻辣饼',
+                    '婆媳肉饼',
+                    '包子+豆浆',
+                    '面包',
+                    '菜夹馍',
+                    '肉夹馍'
+                ]
+            }, {
+                name: '中午',
+                foodList: [
+                    '浆水面',
+                    '油泼面',
+                    '酸汤面',
+                    '牛肉面',
+                    '炸酱面',
+                    '鸡汤刀削面',
+                    '辣卤方便面',
+                    '酸菜方便面',
+                    '酸辣方便面',
+                    '炒拉条',
+                    '炒米饭',
+                    '快餐',
+                    '盖饭',
+                    '锅巴饭',
+                    '饺子',
+                    '煮馍',
+                    '酸辣粉',
+                    '五谷鱼粉',
+                    '三秦套餐',
+                    '砂锅土豆粉',
+                    '砂锅红薯粉',
+                    '砂锅龙须面',
+                    '新疆炒米粉',
+                    '冒菜',
+                ]
+            }, {
+                name: '晚上',
+                foodList: [
+                    '浆水面',
+                    '油泼面',
+                    '酸汤面',
+                    '牛肉面',
+                    '炸酱面',
+                    '鸡汤刀削面',
+                    '辣卤方便面',
+                    '酸菜方便面',
+                    '白象牛肉方便面',
+                    '炒拉条',
+                    '炒米饭',
+                    '快餐',
+                    '盖饭',
+                    '锅巴饭',
+                    '饺子',
+                    '煮馍',
+                    '酸辣粉',
+                    '五谷鱼粉',
+                    '三秦套餐',
+                    '砂锅土豆粉',
+                    '砂锅红薯粉',
+                    '砂锅龙须面',
+                    '新疆炒米粉',
+                    '冒菜',
+                    '火锅',
+                    '串串火锅',
+                    '烤串',
+                    '自己做',
+                    '凉菜+啤酒',
+                ]
+            }]
+            var foodList = []
+            var current = 1
+            typeList.forEach((item, index) => {
+                var li = $('<li></li>')
+                li.html(item.name)
+                if (index == current) {
+                    li.addClass('active')
+                }
+                $('.typeUl').append(li)
+            })
+            $('.setType').click(function() {
+                $('.main').slideUp()
+                $('.typeMain').remove('hide').slideDown()
+            })
+            $('.backBtn').click(function() {
+                $('.typeMain').slideUp()
+                $('.main').slideDown()
+                chooseFood()
+            })
+            $('.typeUl li').click(function() {
+                $('.typeUl li').removeClass('active')
+                $(this).addClass('active')
+                current = $(this).index()
+                $('.typeName').html($(this).html())
+            })
+            $('.resetBtn').click(function() {
+                chooseFood()
+            })
+
+            function chooseFood() {
+                var foodList = typeList[current].foodList
+                var num = 0
+                var speed = 100
+                var speedNum = typeList[current].foodList.length > 19 ? typeList[current].foodList.length + 1 : 20
+                var set = setInterval(() => {
+                    var html = foodList[num] ? foodList[num] : foodList[Math.round(Math.random() * (foodList.length - 1))]
+                    if (num >= speedNum) {
+                        html = foodList[Math.round(Math.random() * (foodList.length - 1))]
+                        clearInterval(set)
+                    }
+                    $('.food').html(html)
+                    num++
+                }, speed)
+            }
+            chooseFood()
+            var url1 = 'https://hbimg.huabanimg.com/2ff631a9d2e81d95a7dece806f7f8f0e0a9755bb2ea7c-CSjryF_fw658/format/webp'
+            var url2 = 'https://hbimg.huabanimg.com/439030c35670aaff98bc55919a7b69c6f93d366e3251e-lzi8Fx_fw658/format/webp'
+            var url3 = 'https://hbimg.huabanimg.com/ff4f1663647b596c7504a183c08e947d7991587a69c9c-k8kuXQ_fw658/format/webp'
+            var count = 0
+            var setBg = setInterval(function() {
+                $(".wrap").hide();
+                count++
+                if (count == 4) {
+                    count -= 3
+                }
+                var url = count == 1 ? url1 : count == 2 ? url2 : url3
+                $(".wrap").show()
+                $('.wrap').css('background-image', `url('${url}')`)
+            }, 5000)
+        })
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="content">
+            <div class="main">
+                <div class="title"><span class="typeName">中午</span>吃什么？</div>
+                <div class="food"></div>
+                <div class="resetBtn">换一个</div>
+                <div class="setType">切换类型</div>
+            </div>
+            <div class="typeMain hide">
+                <ul class="typeUl"></ul>
+                <div class="backBtn">确定</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
